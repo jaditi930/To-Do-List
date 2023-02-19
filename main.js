@@ -1,56 +1,47 @@
+let submit_btn=document.getElementById("submit")
+let sno=1;
+submit_btn.addEventListener("click",(e)=>{
+e.preventDefault();
 let newtask=document.getElementById("title")
 let newdesc=document.getElementById("desc")
-let submit_btn=document.getElementById("submit")
-submit_btn.addEventListener("click",()=>{
-    if(newtask.value=="")
-    return;
+
 let li=document.getElementById("tbody");
-let row=document.createElement("tr")
-let td1=document.createElement("td")
-let td2=document.createElement("td")
-let td3=document.createElement("td")
-let td4=document.createElement("td")
-let remove_btn=document.createElement("i")
-remove_btn.classList.add("fa")
-remove_btn.classList.add("fa-times")
+li.innerHTML+=`<tr>
+<td id="${sno}">${sno}.</td>
+<td><input type="checkbox" id="c-${sno}" onclick="strikeText(${sno})"></td>
+<td id="task-${sno}">${newtask.value}</td>
+<td id="desc-${sno}">${newdesc.value}</td>
+<td><button class="btn btn-primary" id="b-${sno}" onclick="removeItem(${sno})">Delete item</button></td>
+</tr>`
+document.getElementById("title").value=""
+document.getElementById("desc").value=""
+sno++;
 
-remove_btn.classList.add("delete")
-remove_btn.addEventListener("click",removeItem);
-remove_btn.classList.add("btn-class")
-td4.appendChild(remove_btn);
-let cbx=document.createElement("input")
-cbx.type="checkbox"
-cbx.addEventListener("click",strikeText)
-td3.appendChild(cbx);
-td2.innerText=newdesc.value;
-td1.innerText=newtask.value;
-row.appendChild(td3);
-row.appendChild(td1);
-row.appendChild(td2);
-row.appendChild(td4);
-
-console.log(cbx.value)
-li.appendChild(row);
-newtask.value="";
 })
-function reset_list(e)
+document.getElementById("reset").addEventListener("click",reset_list);
+function reset_list()
 {
-    document.getElementById("tbody").innerHTML=""
+    sno=1;
+    document.getElementById("tbody").innerHTML="";
 }
-function removeItem(e)
+function removeItem(t_id)
 {
-    e.target.parentElement.parentElement.style.display="none"
+    let btn = document.getElementById("b-"+t_id)
+    btn.parentElement.parentElement.remove();
+    
 }
-function strikeText(e)
-{   
-    if(e.target.checked)
-    console.log("crossed")
-    let childNodes=e.target.parentElement.parentElement.children;
-    for(let i=1;i<childNodes.length-1;i++)
+
+function strikeText(t_id)
+{   let box = document.getElementById("c-"+t_id)
+    document.getElementById("c-"+t_id).disabled=true;
+    console.log(box.value)
+    if(box.value=="on")
     {
-        let text=childNodes[i].innerText;
-        childNodes[i].innerHTML=`<s>${text}</s>`
+        let temp = document.getElementById(t_id).innerHTML
+        document.getElementById(t_id).innerHTML = `<s>${temp}</s>`;
+        temp = document.getElementById("task-"+t_id).innerHTML
+        document.getElementById("task-"+t_id).innerHTML = `<s>${temp}</s>`;
+        temp = document.getElementById("desc-"+t_id).innerHTML
+        document.getElementById("desc-"+t_id).innerHTML = `<s>${temp}</s>`;   
     }
-    childNodes[0].removeEventListener("click",strikeText)
-    childNodes[0].firstChild.disabled=true;
 }
