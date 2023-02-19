@@ -6,21 +6,10 @@
 }
 #list-items{
     list-style-type: none;
-    font-family: 'Abyssinica SIL', serif;
-
 }
 *{
     margin:0;
     padding:0;
-}
-
-body{
-    position: relative;
-    top:0;
-    left:0;
-}
-label{
-    width:100vw;
 }
 .btn-class{
     margin:5px;

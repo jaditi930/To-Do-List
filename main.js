@@ -1,5 +1,5 @@
-let newtask=document.getElementById("new-item")
-let sno=1;
+let newtask=document.getElementById("title")
+let newdesc=document.getElementById("desc")
 let submit_btn=document.getElementById("submit")
 submit_btn.addEventListener("click",()=>{
     if(newtask.value=="")
@@ -22,8 +22,8 @@ let cbx=document.createElement("input")
 cbx.type="checkbox"
 cbx.addEventListener("click",strikeText)
 td3.appendChild(cbx);
-td1.innerText=sno++;
-td2.innerText=newtask.value;
+td2.innerText=newdesc.value;
+td1.innerText=newtask.value;
 row.appendChild(td3);
 row.appendChild(td1);
 row.appendChild(td2);
@@ -33,6 +33,10 @@ console.log(cbx.value)
 li.appendChild(row);
 newtask.value="";
 })
+function reset_list(e)
+{
+    document.getElementById("tbody").innerHTML=""
+}
 function removeItem(e)
 {
     e.target.parentElement.parentElement.style.display="none"
